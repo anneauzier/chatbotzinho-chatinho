@@ -33,6 +33,12 @@ struct ContentView: View {
     
     @State private var session: LanguageModelSession?
     
+    let sampleQuestions: [String] = [
+        "What is the capital of Brazil?",
+        "Who wrote 'To Kill a Mockingbird'?",
+        "What are the 5 most populated cities in the world?",
+    ]
+    
     private let tokenFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.minimumIntegerDigits = 2
@@ -42,8 +48,8 @@ struct ContentView: View {
     var body: some View {
         VStack {
             switch SystemLanguageModel.default.availability {
-                    case .available:
-                    messagesList
+            case .available:
+                messagesList
                     .onAppear {
                         chat.messages.append(Message(text: "Hello! I'm here to assist you. Feel free to ask me anything.", role: .assistant))
                     }
@@ -117,15 +123,15 @@ struct ContentView: View {
                         }
                         .padding()
                     }
-                    case .unavailable(.deviceNotEligible):
+            case .unavailable(.deviceNotEligible):
                 ContentUnavailableView("Error", systemImage: "xmark.octagon", description: Text("Device not eligible!"))
-                    case .unavailable(.appleIntelligenceNotEnabled):
-                        // Ask the person to turn on Apple Intelligence.
+            case .unavailable(.appleIntelligenceNotEnabled):
+                // Ask the person to turn on Apple Intelligence.
                 ContentUnavailableView("Error", systemImage: "xmark.octagon", description: Text("Apple Intelligence is not enabled!"))
-                    case .unavailable(.modelNotReady):
-                        // The model isn't ready because it's downloading or because of other system reasons.
+            case .unavailable(.modelNotReady):
+                // The model isn't ready because it's downloading or because of other system reasons.
                 ContentUnavailableView("Error", systemImage: "xmark.octagon", description: Text("Model is not ready!"))
-                    case .unavailable(let other):
+            case .unavailable(let other):
                 let errorDescription = "Unknown error: \(String(describing: other))"
                 ContentUnavailableView("Error", systemImage: "xmark.octagon", description: Text(errorDescription))
             }
@@ -139,18 +145,13 @@ struct ContentView: View {
         VStack(alignment: .center, spacing: 10) {
             HStack {
                 Group {
-                    Button(action: {
-                        prompt = "Write a poem about kittens"
-                        Task { await generate() }
-                    }) {
-                        Text("Write a poem about kittens")
-                    }
                     
-                    Button(action: {
-                        prompt = "Tell me a joke about computers"
-                        Task { await generate() }
-                    }) {
-                        Text("Tell me a joke about computers")
+                    
+                    ForEach(sampleQuestions, id: \.self) { question in
+                        Button(question) {
+                            prompt = question
+                            Task { await generate() }
+                        }
                     }
                 }
                 .buttonStyle(.borderless)
@@ -218,18 +219,49 @@ struct ContentView: View {
     }
     
     private func generate() async {
-        print(#function)
         if let session {
-            do {
-                let options = GenerationOptions(temperature: temperature, maximumResponseTokens: maximumResponseTokens)
-                let response = try await session.respond(to: prompt, options: options)
+            //            do {
+            //                let response = try await session.respond(to: prompt, options: options)
+            //
+            //                if let lastIndex = chat.messages.lastIndex(where: { $0.role == .assistant }) {
+            //                    chat.messages[lastIndex].text = response.content
+            //                }
+            //
+            //            } catch {
+            //                print("Error generating response: \(error)")
+            //            }
+            
+            //            let options = GenerationOptions(temperature: temperature, maximumResponseTokens: maximumResponseTokens)
+//            Task { @MainActor in
+//                do {
+//                    if let lastIndex = chat.messages.lastIndex(where: { $0.role == .assistant }) {
+//                        let stream = session.streamResponse(to: prompt, options: options)
+//                        for try await chunk in stream {
+//                            chat.messages[lastIndex].text = chunk
+//                        }
+//                    }
+//                } catch {
+//                    print("Error generating response: \(error)")
+//                }
+//            }
+            Task {
+                var assistantMessage = Message(text: "", role: .assistant)
+                chat.messages.append(assistantMessage)
                 
-                if let lastIndex = chat.messages.lastIndex(where: { $0.role == .assistant }) {
-                    chat.messages[lastIndex].text = response.content
+                let options = GenerationOptions(temperature: temperature, maximumResponseTokens: maximumResponseTokens)
+                let stream = session.streamResponse(to: self.prompt, options: options)
+                
+                for try await chunk in stream {
+//                    assistantMessage.text = chunk.content
+                    chat.messages[chat.messages.count - 1].text = chunk.content
                 }
-
-            } catch {
-                print("Error generating response: \(error)")
+//                if let lastIndex = chat.messages.lastIndex(where: { $0.role == .assistant }) {
+//                    
+//                    for try await chunk in stream {
+//                        chat.messages[lastIndex].text = chunk.content
+//                        chat.messages[messages.count - 1] =
+//                    }
+//                }
             }
         }
     }
