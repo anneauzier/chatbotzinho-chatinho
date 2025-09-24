@@ -1,6 +1,7 @@
 import SwiftUI
 import FoundationModels
 import Playgrounds
+import MarkdownUI
 
 struct ChatbotView: View {
 
@@ -46,6 +47,7 @@ struct ChatbotView: View {
                     }
                     .inspector(isPresented: $chatViewModel.isShowingInspector) {
                         VStack(alignment: .leading) {
+                            
                             Text("Generation Options")
                                 .font(.headline)
                                 .padding(.bottom)
@@ -108,8 +110,8 @@ struct ChatbotView: View {
             ScrollViewReader { scrollView in
                 VStack(alignment: .leading, spacing: 12) {
                     message
-                    ForEach(chatViewModel.messages.indices, id: \.self) { index in
-                        Text(chatViewModel.messages[index])
+                    ForEach(chatViewModel.messages, id: \.self) { message in
+                        Markdown(message)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(10)
                             .glassEffect()

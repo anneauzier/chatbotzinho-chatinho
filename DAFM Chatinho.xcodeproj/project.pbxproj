@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9FA4EF932E8441EB00087806 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA4EF922E8441EB00087806 /* MarkdownUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		38DEB49E2E59DA05003B9DE5 /* DAFM Chatinho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DAFM Chatinho.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FA4EF932E8441EB00087806 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = "DAFM Chatinho";
 			packageProductDependencies = (
+				9FA4EF922E8441EB00087806 /* MarkdownUI */,
 			);
 			productName = "DAFM Chatinho";
 			productReference = 38DEB49E2E59DA05003B9DE5 /* DAFM Chatinho.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 38DEB4952E59DA05003B9DE5;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				9FA4EF912E8441EB00087806 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 38DEB49F2E59DA05003B9DE5 /* Products */;
 			projectDirPath = "";
@@ -351,6 +360,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9FA4EF912E8441EB00087806 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9FA4EF922E8441EB00087806 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9FA4EF912E8441EB00087806 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 38DEB4962E59DA05003B9DE5 /* Project object */;
 }
