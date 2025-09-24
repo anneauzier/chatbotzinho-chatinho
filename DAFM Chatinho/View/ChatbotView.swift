@@ -21,7 +21,8 @@ struct ChatbotView: View {
                                 .padding(5)
                                 .glassEffect()
                                 .onSubmit {
-                                    chatViewModel.messages.append(chatViewModel.prompt)
+                                    let chatMessage = ChatMessage(message: chatViewModel.prompt, isFromChat: false)
+                                    chatViewModel.messages.append(chatMessage)
                                     Task { await chatViewModel.generate() }
                                 }
                         }
@@ -93,6 +94,8 @@ struct ChatbotView: View {
                     ForEach(chatViewModel.sampleQuestions, id: \.self) { question in
                         Button(question) {
                             chatViewModel.prompt = question
+                            let chatMessage = ChatMessage(message: chatViewModel.prompt, isFromChat: false)
+                            chatViewModel.messages.append(chatMessage)
                             Task { await chatViewModel.generate() }
                         }
                     }
@@ -111,10 +114,23 @@ struct ChatbotView: View {
                 VStack(alignment: .leading, spacing: 12) {
                     message
                     ForEach(chatViewModel.messages, id: \.self) { message in
-                        Markdown(message)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(10)
-                            .glassEffect()
+                        HStack{
+                            if !message.isFromChat {
+                                Spacer()
+                            }
+                            
+                            Markdown(message.returnTextFormatted())
+//                                .foregroundColor(message.isFromChat ? .red : .blue)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 10)
+                            
+                            if message.isFromChat {
+                                Spacer()
+                            }
+                        }
+                        .glassEffect(in: RoundedRectangle(cornerRadius: 25))
+                            .padding(8)
+                        
                     }
                 }
                 .padding(.horizontal)
@@ -132,10 +148,4 @@ struct ChatbotView: View {
 
 #Preview {
     ChatbotView()
-}
-
-#Playground("Playground") {
-    let session = LanguageModelSession()
-    let response = try await session.respond(to: "Write a Swift function")
-    print(response.content)
 }

@@ -19,7 +19,7 @@ class ChatbotViewModel: ObservableObject {
     @Published var maximumResponseTokens: Int = 200
     @Published var instructions: String = ""
     
-    @Published var messages: [String] = []
+    @Published var messages: [ChatMessage] = []
     
     let sampleQuestions: [String] = [
         "What is the capital of Brazil?",
@@ -48,11 +48,12 @@ class ChatbotViewModel: ObservableObject {
             let options = GenerationOptions(temperature: temperature, maximumResponseTokens: maximumResponseTokens)
             let response = session.streamResponse(to: input, options: options)
             
-            messages.append("")
+            var chatMessage = ChatMessage(message: "", isFromChat: true)
+            messages.append(chatMessage)
             for try await partialMessage in response {
                 messages.removeLast()
-                messages.append(partialMessage.content)
-               
+                chatMessage = ChatMessage(message: partialMessage.content, isFromChat: true)
+                messages.append(chatMessage)
             }
             
         } catch {
