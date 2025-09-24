@@ -5,19 +5,7 @@ import Playgrounds
 struct ChatbotView: View {
 
     @StateObject private var chatViewModel = ChatbotViewModel()
-    
-    let sampleQuestions: [String] = [
-        "What is the capital of Brazil?",
-        "Who wrote 'To Kill a Mockingbird'?",
-        "What are the 5 most populated cities in the world?",
-    ]
-    
-    private let tokenFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.minimumIntegerDigits = 2
-        return formatter
-    }()
-    
+
     var body: some View {
         VStack {
             switch SystemLanguageModel.default.availability {
@@ -73,7 +61,7 @@ struct ChatbotView: View {
                             HStack {
                                 Text("Max ToKens:")
                                     .font(.callout)
-                                TextField("Enter a number", value: $chatViewModel.maximumResponseTokens, formatter: tokenFormatter)
+                                TextField("Enter a number", value: $chatViewModel.maximumResponseTokens, formatter: chatViewModel.tokenFormatter)
                             }
                             .padding(.bottom)
                             
@@ -100,7 +88,7 @@ struct ChatbotView: View {
         VStack(alignment: .center, spacing: 10) {
             HStack {
                 Group {
-                    ForEach(sampleQuestions, id: \.self) { question in
+                    ForEach(chatViewModel.sampleQuestions, id: \.self) { question in
                         Button(question) {
                             chatViewModel.prompt = question
                             Task { await chatViewModel.generate() }

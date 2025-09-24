@@ -21,6 +21,18 @@ class ChatbotViewModel: ObservableObject {
     
     @Published var messages: [String] = []
     
+    let sampleQuestions: [String] = [
+        "What is the capital of Brazil?",
+        "Who wrote 'To Kill a Mockingbird'?",
+        "What are the 5 most populated cities in the world?",
+    ]
+    
+    let tokenFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.minimumIntegerDigits = 2
+        return formatter
+    }()
+    
     func scrollToBottom(scrollView: ScrollViewProxy) {
         withAnimation {
             scrollView.scrollTo("bottom", anchor: .bottom)
