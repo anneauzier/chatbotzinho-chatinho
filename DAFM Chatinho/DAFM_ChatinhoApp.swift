@@ -12,7 +12,7 @@ struct DAFM_ChatinhoApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ChatbotView()
         }
     }
 }
