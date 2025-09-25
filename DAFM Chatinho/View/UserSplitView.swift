@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct UserSplitView: View {
-    @State var backlog: ProductBacklogMock?
-    @State var selectedItem: UserStoryMock? = nil
+    @State var backlog: ProductBacklog?
+    @State var selectedItem: UserStory? = nil
     
     var body: some View {
         
@@ -47,8 +47,8 @@ struct ProductSideBar: View {
 }
 
 struct UserSideBar: View {
-    @State var backlog: ProductBacklogMock
-    @Binding var selectedStory: UserStoryMock?
+    @State var backlog: ProductBacklog
+    @Binding var selectedStory: UserStory?
     
     var body: some View {
         List{
@@ -64,7 +64,7 @@ struct UserSideBar: View {
 }
 
 struct UserDetailView: View {
-    var userStory: UserStoryMock?
+    var userStory: UserStory?
     var body: some View {
         VStack{
             if let selectedItem = userStory {
