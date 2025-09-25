@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FoundationModels
 
 enum MenuOptions: String, CaseIterable {
     case chatBot = "Chat Bot"
@@ -17,33 +18,39 @@ struct MainView: View {
     @State var selected: MenuOptions = .scrum
     
     var body: some View {
-        VStack {
-            HStack {
-                ForEach(MenuOptions.allCases, id: \.self){ option in
-                    Button(action: {
-                        self.selected = option
-                    }) {
-                        Text(option.rawValue)
-                            .foregroundStyle(selected == option ? .white : .black)
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(selected == option ? .blue : .gray)
-                            )
-                        
+        switch SystemLanguageModel.default.availability {
+        case .available:
+            VStack {
+                HStack {
+                    ForEach(MenuOptions.allCases, id: \.self){ option in
+                        Button(action: {
+                            self.selected = option
+                        }) {
+                            Text(option.rawValue)
+                                .foregroundStyle(selected == option ? .white : .black)
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(selected == option ? .blue : .gray)
+                                )
+                            
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .padding()
                     }
-                    .buttonStyle(PlainButtonStyle())
-                    .padding()
+                }
+                switch selected {
+                case .chatBot:
+                    ChatbotView()
+                case .scrum:
+                    FeatureList()
+                case .palletGenerator:
+                    PalletGeneratorView()
                 }
             }
-            switch selected {
-            case .chatBot:
-                ChatbotView()
-            case .scrum:
-                FeatureList()
-            case .palletGenerator:
-                PalletGeneratorView()
-            }
+        case .unavailable:
+            Text("Liga o Apple Inteligence ai faz favor meu amigo!")
         }
+        
     }
 }
