@@ -9,9 +9,8 @@ import SwiftUI
 
 struct FeatureList: View {
     
-    @State var featureList:[String] = []
-    
-    @State var featureText: String = ""
+    @State var viewModel = FeaturesViewModel()
+
     @State var isSubmited:Bool = false
     
     var body: some View {
@@ -19,17 +18,17 @@ struct FeatureList: View {
             Text("Describe the apps functionalities")
             HStack {
                 TextField("Type your feature here",
-                          text: $featureText)
+                          text: $viewModel.featureText)
                 .onSubmit {
-                    addNewFeature()
+                    viewModel.addNewFeature()
                 }
                 Spacer()
                 Button("Add") {
-                    addNewFeature()
+                    viewModel.addNewFeature()
                 }
             }
             List {
-                ForEach(featureList, id:\.self) { feature in
+                ForEach(viewModel.featureList, id:\.self) { feature in
                     Text(feature)
                 }
             }.listStyle(.bordered)
@@ -39,12 +38,10 @@ struct FeatureList: View {
         }.padding(8)
     }
     
-    func addNewFeature() {
-        featureList.append(featureText)
-        featureText = ""
-    }
+
 }
 
 #Preview {
     FeatureList()
+
 }
