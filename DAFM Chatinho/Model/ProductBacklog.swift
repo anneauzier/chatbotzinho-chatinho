@@ -6,9 +6,14 @@
 //
 
 import FoundationModels
+import Foundation
 
 @Generable(description: "A representation of a product backlog for scrum methodology")
-struct ProductBacklog {
+struct ProductBacklog: Identifiable {
+    
+    var id: String {
+        UUID().uuidString
+    }
     
     @Guide(description: "A list of user stories that compose the product backlog and have to be completed so that the project can be considered done")
     var userStories: [UserStory]

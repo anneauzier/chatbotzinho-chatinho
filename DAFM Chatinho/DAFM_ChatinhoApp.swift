@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct DAFM_ChatinhoApp: App {
     
+    @State var backlogStore: BacklogStore = BacklogStore()
     @State var backlog: ProductBacklog?
 
     var body: some Scene {
@@ -18,6 +19,7 @@ struct DAFM_ChatinhoApp: App {
            // MainView()
             NavigationStack {
                 UserSplitView(backlog: backlog)
+                    .environment(backlogStore)
             }
         }
     }
