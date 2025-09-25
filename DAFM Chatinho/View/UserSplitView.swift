@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct UserSplitView: View {
+    
+    @Environment(BacklogStore.self) var backlogStore
+    
     @State var backlog: ProductBacklog?
     @State var selectedItem: UserStory? = nil
     @State var isCreating: Bool = false
@@ -16,7 +19,7 @@ struct UserSplitView: View {
 
         if isCreating {
             NavigationSplitView {
-                ProductSideBar(backlog: $backlog)
+                ProductSideBar()
             } detail: {
                 if isCreating {
                     FeatureList()
@@ -26,10 +29,11 @@ struct UserSplitView: View {
             }
         } else {
             NavigationSplitView {
-                ProductSideBar(backlog: $backlog)
+                ProductSideBar()
             } content: {
-                if let backlog {
-                    UserSideBar(backlog: backlog, selectedStory: $selectedItem)
+                if let backlog = backlogStore.selectedBacklog {
+                    UserSideBar(backlog: backlog,
+                                selectedStory: $selectedItem)
                 } else {
                     EmptyView()
                 }

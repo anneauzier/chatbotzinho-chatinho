@@ -10,4 +10,5 @@ import Foundation
 @Observable
 class BacklogStore {
     var backlogs:[ProductBacklog] = []
+    var selectedBacklog: ProductBacklog?
 }

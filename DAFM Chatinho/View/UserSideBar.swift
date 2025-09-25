@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UserSideBar: View {
-    @State var backlog: ProductBacklog
+    var backlog: ProductBacklog
     @Binding var selectedStory: UserStory?
     
     var body: some View {
