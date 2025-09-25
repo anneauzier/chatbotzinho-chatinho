@@ -26,6 +26,8 @@ struct UserDetailView: View {
         }
     }
     
+    let allResponsables: [String] = ["Anne", "Filipe", "Igor", "Sergio"]
+    
     var body: some View {
         VStack{
             if let selectedItem = userStory {
@@ -44,7 +46,18 @@ struct UserDetailView: View {
                                     Capsule()
                                         .fill(priorityColor)
                                 }
-                        }.padding(.vertical)
+                        }
+                        
+                        HStack{
+                            Image(systemName: "person")
+                            Text(allResponsables.randomElement()!)
+                            
+                            Text("\(Int.random(in: 0...7)) story Points")
+                                .padding(.horizontal, 4)
+                            
+                            Text("\(0)/\(userStory?.tasks.count ?? 0) tasks completed")
+                                .padding(.leading, 4)
+                        }
                         
                         Text(selectedItem.description)
                             .font(.body)
