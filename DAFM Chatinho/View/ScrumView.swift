@@ -61,7 +61,7 @@ struct ScrumView: View {
     
     func generate() async {
         do {
-            let session = LanguageModelSession(instructions: "generate a product backlog following the SCRUM principles for an iOS development project, with design and coder roles. The prompt in providing the apps main feature. The output must be  list of user stories based on the feature description.")
+            let session = LanguageModelSession(instructions: "Generate a product backlog following the SCRUM principles for an iOS development project, with design and coder roles. The prompt in providing the apps main feature. The output must be  list of user stories based on the feature description. Each featire is separated by the '|' charactere.")
             
             let result = try await session.respond(to: featureDescription,
                                                    generating: ProductBacklog.self)

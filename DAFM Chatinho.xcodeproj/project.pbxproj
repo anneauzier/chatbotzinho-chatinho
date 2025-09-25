@@ -11,7 +11,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		38DEB49E2E59DA05003B9DE5 /* Anne, Filipe and Igor ChatBot .app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Anne, Filipe and Igor ChatBot .app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		38DEB49E2E59DA05003B9DE5 /* Anne, Filipe, Igor and Sergio ChatBot .app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Anne, Filipe, Igor and Sergio ChatBot .app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -45,7 +45,7 @@
 		38DEB49F2E59DA05003B9DE5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				38DEB49E2E59DA05003B9DE5 /* Anne, Filipe and Igor ChatBot .app */,
+				38DEB49E2E59DA05003B9DE5 /* Anne, Filipe, Igor and Sergio ChatBot .app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,7 +73,7 @@
 				9FA4EF922E8441EB00087806 /* MarkdownUI */,
 			);
 			productName = "DAFM Chatinho";
-			productReference = 38DEB49E2E59DA05003B9DE5 /* Anne, Filipe and Igor ChatBot .app */;
+			productReference = 38DEB49E2E59DA05003B9DE5 /* Anne, Filipe, Igor and Sergio ChatBot .app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -279,7 +279,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.apple.developeracademy.DAFM-Chatinho";
-				PRODUCT_NAME = "Anne, Filipe and Igor ChatBot ";
+				PRODUCT_NAME = "Anne, Filipe, Igor and Sergio ChatBot ";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -323,7 +323,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.apple.developeracademy.DAFM-Chatinho";
-				PRODUCT_NAME = "Anne, Filipe and Igor ChatBot ";
+				PRODUCT_NAME = "Anne, Filipe, Igor and Sergio ChatBot ";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
