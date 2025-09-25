@@ -9,15 +9,16 @@ import SwiftUI
 
 struct FeatureList: View {
     
+    @Environment(BacklogStore.self) var backlogStore
+    
     @State var viewModel = FeaturesViewModel()
     
     @State var isSubmited:Bool = false
     
     @State var showSplitView: Bool = false
-    
     @State var backlog: ProductBacklog?
     
-    @State var isGenerating: Bool = false
+    @Binding var isCreating: Bool
     
     var body: some View {
         NavigationStack{
@@ -28,11 +29,11 @@ struct FeatureList: View {
                               text: $viewModel.featureText)
                     .onSubmit {
                         viewModel.addNewFeature()
-                    }.disabled(isGenerating)
+                    }.disabled(isCreating)
                     Spacer()
                     Button("Add") {
                         viewModel.addNewFeature()
-                    }.disabled(isGenerating)
+                    }.disabled(isCreating)
                 }
                 
                 List {
@@ -59,19 +60,20 @@ struct FeatureList: View {
                 Button("Generate User Stories") {
                     Task {
                         do {
-                            isGenerating.toggle()
+                            isCreating.toggle()
                             backlog = try await self.viewModel.generateUserStories()
-                            isGenerating.toggle()
-                            showSplitView.toggle()
+                            
+                            guard let newBacklog = backlog else { return }
+                            backlogStore.backlogs.append(newBacklog)
+                            backlogStore.selectedBacklog = newBacklog
+                            isCreating = false
+
                         } catch {
                             print(error)
                         }
                     }
-                }.disabled(isGenerating)
+                }.disabled(isCreating)
             }.padding(8)
-                .navigationDestination(isPresented: $showSplitView) {
-                    UserSplitView(backlog: backlog)
-                }
         }
         
     }
@@ -80,6 +82,11 @@ struct FeatureList: View {
 }
 
 #Preview {
+<<<<<<< HEAD
     FeatureList()
     
+=======
+//    FeatureList()
+
+>>>>>>> origin/projectNavigation
 }

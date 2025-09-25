@@ -9,12 +9,22 @@ import SwiftUI
 
 @main
 struct DAFM_ChatinhoApp: App {
+    
+    @State var backlogStore: BacklogStore = BacklogStore()
 
     var body: some Scene {
         WindowGroup {
 //            ChatbotView()
            // MainView()
-            FeatureList()
+            NavigationStack {
+                UserSplitView()
+                    .environment(backlogStore)
+            }
         }
+    }
+    
+    init() {
+        backlogStore.backlogs.append(ProductBacklog(name: "Test 1", userStories: [ UserStory(shortDescription: "aaa", description: "bleblebe", acceptanceCriteria: [], tasks: [], priority: 0)]))
+        backlogStore.backlogs.append(ProductBacklog(name: "Test 2", userStories: [ UserStory(shortDescription: "bbb", description: "bleblebe", acceptanceCriteria: [], tasks: [], priority: 0)]))
     }
 }

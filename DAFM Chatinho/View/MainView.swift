@@ -16,6 +16,7 @@ enum MenuOptions: String, CaseIterable {
 
 struct MainView: View {
     @State var selected: MenuOptions = .scrum
+    @State var isCreating: Bool = false
     
     var body: some View {
         switch SystemLanguageModel.default.availability {
@@ -43,14 +44,23 @@ struct MainView: View {
                 case .chatBot:
                     ChatbotView()
                 case .scrum:
-                    FeatureList()
+                    FeatureList(isCreating: $isCreating)
                 case .palletGenerator:
                     PalletGeneratorView()
                 }
             }
+
         case .unavailable:
             Text("Liga o Apple Inteligence ai faz favor meu amigo!")
+            switch selected {
+            case .chatBot:
+                ChatbotView()
+            case .scrum:
+                UserSplitView()
+            case .palletGenerator:
+                PalletGeneratorView()
+            }
         }
-        
+
     }
 }
