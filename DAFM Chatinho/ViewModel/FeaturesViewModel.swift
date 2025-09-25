@@ -25,4 +25,20 @@ class FeaturesViewModel {
         featureText = ""
     }
     
+    func generateUserStories() {
+        print(createFeatureList())
+    }
+    
+    func createFeatureList() -> String {
+        featureList
+            .enumerated()
+            .reduce("") { partialList, newFeature in
+            partialList + pipe(newFeature.offset) + newFeature.element
+        }
+    }
+    
+    private func pipe(_ newFeatureOffset: Int) -> String {
+        return newFeatureOffset != 0 ? "|"  : ""
+    }
+    
 }

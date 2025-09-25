@@ -33,7 +33,7 @@ struct FeatureList: View {
                 }
             }.listStyle(.bordered)
             Button("Generate User Stories") {
-                //TODO
+                viewModel.generateUserStories()
             }
         }.padding(8)
     }
