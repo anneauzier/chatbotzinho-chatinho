@@ -10,40 +10,47 @@ import SwiftUI
 struct UserSplitView: View {
     @State var backlog: ProductBacklog?
     @State var selectedItem: UserStory? = nil
-    @State var isCreating: Bool = false {
-        didSet {
-            visibility = isCreating ? .detailOnly : .automatic
-        }
-    }
-    @State var visibility: NavigationSplitViewVisibility = .automatic
+    @State var isCreating: Bool = false
     
     var body: some View {
 
-        NavigationSplitView(columnVisibility: $visibility) {
-            ProductSideBar()
-        } content: {
-            if let backlog {
-                UserSideBar(backlog: backlog, selectedStory: $selectedItem)
-            } else {
-                EmptyView()
+        if isCreating {
+            NavigationSplitView {
+                ProductSideBar()
+            } detail: {
+                if isCreating {
+                    FeatureList()
+                } else {
+                    UserDetailView(userStory: selectedItem)
+                }
             }
-        } detail: {
-            if isCreating {
-                FeatureList()
-            } else {
-                UserDetailView(userStory: selectedItem)
+        } else {
+            NavigationSplitView {
+                ProductSideBar()
+            } content: {
+                if let backlog {
+                    UserSideBar(backlog: backlog, selectedStory: $selectedItem)
+                } else {
+                    EmptyView()
+                }
+            } detail: {
+                if isCreating {
+                    FeatureList()
+                } else {
+                    UserDetailView(userStory: selectedItem)
+                }
             }
-        }
-        
-        .toolbar {
-            ToolbarItem {
-                Button {
-                    isCreating.toggle()
-                } label: {
-                    Image(systemName: "plus")
+            .toolbar {
+                ToolbarItem {
+                    Button {
+                        isCreating.toggle()
+                    } label: {
+                        Image(systemName: "plus")
+                    }
                 }
             }
         }
+        
         
     }
 }
