@@ -8,10 +8,7 @@
 import SwiftUI
 
 struct UserSplitView: View {
-    @State private var selectedItem: StoryModel = StoryModel(text: "Home")
-    
-    @State var items: [StoryModel] = [
-        StoryModel(text: "Home"), StoryModel(text: "Sobre"), StoryModel(text: "Sobre nós"), StoryModel(text: "Sobre a equipe"), StoryModel(text: "Sobre o projeto")]
+    @State var backlog: ProductBacklog
     
     var body: some View {
         
@@ -24,16 +21,16 @@ struct UserSplitView: View {
 }
 
 struct UserSideBar: View {
-    @State var items: [StoryModel]
-    @Binding var selectedItem: StoryModel
+    @State var backlog: ProductBacklog
+    @Binding var selectedStory: UserStory
     
     var body: some View {
         List{
-            ForEach(items, id: \.id){ item in
+            ForEach(backlog.userStories, id: \.id){ userStory in
                 Button {
-                    selectedItem = item
+                    selectedStory = userStory
                 } label: {
-                    Text(item.text)
+                    Text(userStory.shortDescription)
                 }
             }
         }
@@ -41,8 +38,10 @@ struct UserSideBar: View {
 }
 
 struct UserDetailView: View {
-    @Binding var selectedItem: StoryModel
+    @State var userStory: UserStory
     var body: some View {
-        Text(selectedItem.text)
+        VStack{
+            Text(selectedItem.text)
+        }
     }
 }

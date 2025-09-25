@@ -6,9 +6,12 @@
 //
 
 import FoundationModels
+import Foundation
 
 @Generable(description: "Scrum user story")
-struct UserStory {
+struct UserStory: Identifiable {
+    
+    var id: UUID = UUID()
     
     @Guide(description: "Short name description")
     var shortDescription: String

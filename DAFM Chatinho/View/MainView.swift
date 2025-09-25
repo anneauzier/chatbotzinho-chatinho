@@ -7,28 +7,43 @@
 
 import SwiftUI
 
+enum MenuOptions: String, CaseIterable {
+    case chatBot = "Chat Bot"
+    case palletGenerator = "Pallet Generator"
+    case scrum = "Scrum"
+}
+
 struct MainView: View {
-    @State var selected: Bool = false
+    @State var selected: MenuOptions = .chatBot
     
     var body: some View {
         VStack {
             HStack {
-                Button(action: {
-                    self.selected.toggle()
-                }) {
-                    Text("Change")
+                ForEach(MenuOptions.allCases, id: \.self){ option in
+                    Button(action: {
+                        self.selected = option
+                    }) {
+                        Text(option.rawValue)
+                            .foregroundStyle(selected == option ? .white : .black)
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(selected == option ? .blue : .gray)
+                            )
+                        
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .padding()
                 }
-                .buttonStyle(PlainButtonStyle())
-                .padding()
             }
-            
-            if selected {
-                ScrumView()
-            } else {
+            switch selected {
+            case .chatBot:
                 ChatbotView()
-//                PalletGeneratorView()
+            case .scrum:
+                ScrumView()
+            case .palletGenerator:
+                PalletGeneratorView()
             }
         }
-        
     }
 }

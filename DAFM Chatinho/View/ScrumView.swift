@@ -10,14 +10,11 @@ import FoundationModels
 
 struct ScrumView: View {
     @State var functionalities: [String] = []
-    @State var text: String = ""
     @State var prompt: String = ""
     @State private var isGenerating = false
-    
-    @State private var stories: StoryModel = StoryModel(text: "aa")
-    //final model
-//    @State private var stories: [StoryModel] = []
-    
+    @State var featureDescription: String = ""
+    @State var backlog: ProductBacklog?
+
     var body: some View {
         if isGenerating {
             VStack {
@@ -29,15 +26,16 @@ struct ScrumView: View {
             }
         } else {
             NavigationStack{
-                NavigationLink("Resultado", destination: UserSplitView())
+                NavigationLink("Generate", destination: UserSplitView())
+                
                 ScrollView{
-                    TextField("Type your functionality here and press ⏎", text: $text)
+                    TextField("Type your functionality here and press ⏎", text: $featureDescription)
                         .padding(5)
                         .textFieldStyle(.plain)
                         .padding(5)
                         .glassEffect()
                         .onSubmit {
-                            functionalities.append(text)
+                            functionalities.append(featureDescription)
                         }
                     
                     List {
@@ -63,10 +61,13 @@ struct ScrumView: View {
     
     func generate() async {
         do {
-            let session = LanguageModelSession(instructions: "You are a scrum specialist, you are creating the Kanban backlog, generate user stories based on prompt")
-            let result = try await session.respond(to: prompt, generating: StoryModel.self)
+            let session = LanguageModelSession(instructions: "generate a product backlog following the SCRUM principles for an iOS development project, with design and coder roles. The prompt in providing the apps main feature. The output must be  list of user stories based on the feature description.")
             
-            stories = result.content
+            let result = try await session.respond(to: featureDescription,
+                                                   generating: ProductBacklog.self)
+            
+            backlog = result.content
+
         } catch {
             print(error.localizedDescription)
         }
