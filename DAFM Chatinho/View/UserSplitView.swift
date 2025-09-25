@@ -28,19 +28,19 @@ struct UserSplitView: View {
 }
 
 struct ProductSideBar: View {
-//    @State var backlog: ProductBacklogMock
-//    @Binding var selectedStory: UserStoryMock?
+    //    @State var backlog: ProductBacklogMock
+    //    @Binding var selectedStory: UserStoryMock?
     
     var array = [1,3,4,5,6,7,8,9,10]
     var body: some View {
         List{
             ForEach(array, id: \.self){ index in
                 Text("\(index)")
-//                Button {
-//                    selectedStory = userStory
-//                } label: {
-//                    Text(userStory.shortDescription)
-//                }
+                //                Button {
+                //                    selectedStory = userStory
+                //                } label: {
+                //                    Text(userStory.shortDescription)
+                //                }
             }
         }
     }
@@ -69,42 +69,68 @@ struct UserDetailView: View {
         VStack{
             if let selectedItem = userStory {
                 ScrollView {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 30) {
+                        
                         HStack {
                             Text(selectedItem.shortDescription)
                                 .font(.largeTitle)
+                                .bold()
                         }
-                        
+                
                         Text(selectedItem.description)
                             .font(.body)
                         
-                        ForEach(selectedItem.acceptanceCriteria, id: \.self){ criteria in
-                            Text(criteria)
-                                .font(.headline)
-                        }
-                        
-                        ForEach(selectedItem.tasks, id: \.name) { task in
-                            HStack{
-                                Text(task.name)
-                                    .font(.title)
-                                Text(task.role)
-                                    .font(.title2)
-                                Text("\(task.priority)")
-                                    .font(.title)
-                                    .foregroundStyle(.red)
-                            }
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Acceptance Criteria")
+                                .font(.title2)
+                                .bold()
                             
-                            Text(task.description)
-                                .font(.body)
-                        }
+                            ForEach(selectedItem.acceptanceCriteria, id: \.self) { item in
+                                HStack(alignment: .top, spacing: 12) {
+                                    Image(systemName: "checkmark")
+                                        .foregroundStyle(.blue)
+                                        .imageScale(.medium)
+                                    Text(item)
+                                        .font(.body)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                        }.cardStyle
+                        
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Tasks")
+                                .font(.title2)
+                                .bold()
 
-                    }.frame(maxWidth: .infinity, alignment: .leading)
-                    .border(.red)
-                    
-                    
+                            ForEach(selectedItem.tasks, id: \.name) { task in
+                                VStack(alignment: .leading, spacing: 5) {
+                                    Text(task.name)
+                                        .font(.title2)
+                                    Text(task.description)
+                                        .font(.body)
+                                        .foregroundStyle(.secondary)
+                                    Text(task.role)
+                                        .font(.body)
+
+                                }
+                            }
+                        }.cardStyle
+                    }
                 }.padding()
-                    .border(.blue)
             }
         }
+    }
+}
+
+extension View {
+    var cardStyle: some View {
+        self
+            .padding(20)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(Color(.secondarySystemFill))
+            )
+            .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 4)
     }
 }
