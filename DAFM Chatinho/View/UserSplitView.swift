@@ -16,7 +16,7 @@ struct UserSplitView: View {
 
         if isCreating {
             NavigationSplitView {
-                ProductSideBar()
+                ProductSideBar(backlog: $backlog)
             } detail: {
                 if isCreating {
                     FeatureList()
@@ -26,7 +26,7 @@ struct UserSplitView: View {
             }
         } else {
             NavigationSplitView {
-                ProductSideBar()
+                ProductSideBar(backlog: $backlog)
             } content: {
                 if let backlog {
                     UserSideBar(backlog: backlog, selectedStory: $selectedItem)
@@ -61,22 +61,5 @@ struct UserSplitView: View {
     }
 }
 
-struct ProductSideBar: View {
-    //    @State var backlog: ProductBacklogMock
-    //    @Binding var selectedStory: UserStoryMock?
-    
-    var array = [1,3,4,5,6,7,8,9,10]
-    var body: some View {
-        List{
-            ForEach(array, id: \.self){ index in
-                Text("\(index)")
-                //                Button {
-                //                    selectedStory = userStory
-                //                } label: {
-                //                    Text(userStory.shortDescription)
-                //                }
-            }
-        }
-    }
-}
+
 
