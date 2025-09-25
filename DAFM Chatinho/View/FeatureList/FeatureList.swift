@@ -10,12 +10,14 @@ import SwiftUI
 struct FeatureList: View {
     
     @State var viewModel = FeaturesViewModel()
-
+    
     @State var isSubmited:Bool = false
     
     @State var showSplitView: Bool = false
     
     @State var backlog: ProductBacklog?
+    
+    @State var isGenerating: Bool = false
     
     var body: some View {
         NavigationStack{
@@ -32,6 +34,7 @@ struct FeatureList: View {
                         viewModel.addNewFeature()
                     }
                 }
+                
                 List {
                     ForEach(viewModel.featureList, id:\.self) { feature in
                         Text(feature)
@@ -40,17 +43,30 @@ struct FeatureList: View {
                             }
                     }
                 }.listStyle(.bordered)
+                    .overlay {
+                        if isGenerating {
+                            VStack {
+                                Spacer()
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle())
+                                Text("Generating colors...")
+                                    .font(.headline)
+                                Spacer()
+                            }
+                        }
+                    }
+                
                 Button("Generate User Stories") {
                     Task {
                         do {
+                            isGenerating.toggle()
                             backlog = try await self.viewModel.generateUserStories()
-                            print(backlog)
                             showSplitView.toggle()
                         } catch {
                             print(error)
                         }
                     }
-                }
+                }.disabled(isGenerating)
             }.padding(8)
                 .navigationDestination(isPresented: $showSplitView) {
                     UserSplitView(backlog: backlog)
@@ -59,10 +75,10 @@ struct FeatureList: View {
         
     }
     
-
+    
 }
 
 #Preview {
     FeatureList()
-
+    
 }

@@ -14,17 +14,17 @@ enum Role {
     func returnColor() -> Color {
         switch self {
            case .coding:
-            return Color.blue
+            return Color.blue.opacity(0.3)
         case .design:
-            return Color.purple
+            return Color.purple.opacity(0.3)
         }
     }
     
     static func cretateByString(name: String) -> Role {
         switch name {
-            case "coder", "coding", "developer":
+            case "coder", "coding", "developer", "Coding":
             return .coding
-        case "designer", "design", "designing":
+        case "designer", "design", "designing", "Design":
             return .design
         default:
             return .coding
@@ -38,15 +38,15 @@ enum Priority: String {
     func returnColor() -> Color {
         switch self {
             case .high:
-            return Color.red
+            return Color.red.opacity(0.5)
         case .mediumHigh:
-            return Color.orange
+            return Color.orange.opacity(0.5)
         case .medium:
-            return Color.yellow
+            return Color.pink.opacity(0.5)
         case .mediumLow:
-            return Color.blue
+            return Color.blue.opacity(0.5)
         case .low:
-            return Color.green
+            return Color.green.opacity(0.5)
         }
     }
     

@@ -6,82 +6,6 @@
 //
 import SwiftUI
 
-//struct UserDetailView: View {
-//    var userStory: UserStory?
-//    
-//    var priorityColor: Color {
-//        var color: Color = .red
-//        if let priorityNumber = userStory?.priority {
-//            let priority = Priority.cretateByNumber(number: priorityNumber)
-//            color = priority.returnColor()
-//        }
-//       return color
-//    }
-//    
-//    var body: some View {
-//        VStack{
-//            if let selectedItem = userStory {
-//                ScrollView {
-//                    VStack(alignment: .leading) {
-//                        HStack {
-//                            Text(selectedItem.shortDescription)
-//                                .font(.largeTitle)
-//                            
-//                            Capsule()
-//                                .fill(priorityColor)
-//                                .overlay(
-//                                    Text("\(selectedItem.priority)")
-//                                        .font(.largeTitle)
-//                                )
-//                                .frame(maxWidth: 200)
-//                        }.padding(.vertical)
-//                        
-//                        Text("Description:")
-//                            .font(.headline)
-//                            .padding(.vertical, 4)
-//                        
-//                        Text("\(selectedItem.description)")
-//                            .font(.body)
-//                            .padding(.vertical, 4)
-//                        
-//                        Text("Acceptance Criteria:")
-//                            .font(.headline)
-//                            .padding(.vertical, 4)
-//                        
-//                        ForEach(selectedItem.acceptanceCriteria, id: \.self){ criteria in
-//                            Text(criteria)
-//                                .font(.body)
-//                        }
-//                        .padding(.bottom, 8)
-//                        
-//                        Text("Tasks:")
-//                            .font(.headline)
-//                            .padding(.vertical, 4)
-//                        
-//                        ForEach(selectedItem.tasks, id: \.name) { task in
-//                            HStack{
-//                                Text(task.name)
-//                                    .font(.title)
-//                                Text(task.role)
-//                                    .font(.title2)
-//                                Text("\(task.priority)")
-//                                    .font(.title)
-//                                    .foregroundStyle(.red)
-//                            }
-//                            
-//                            Text(task.description)
-//                                .font(.body)
-//                        }
-//
-//                    }.frame(maxWidth: .infinity, alignment: .leading)
-////                    .border(.red)
-//                }.padding()
-//                    .border(.blue)
-//            }
-//        }
-//    }
-//}
-
 struct UserDetailView: View {
     var userStory: UserStory?
     
@@ -100,29 +24,28 @@ struct UserDetailView: View {
         } else {
             .high
         }
-        
     }
     
     var body: some View {
         VStack{
             if let selectedItem = userStory {
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 30) {
-                        
+                    VStack(alignment: .leading, spacing: 25) {
                         HStack {
                             Text(selectedItem.shortDescription)
                                 .font(.largeTitle)
                                 .bold()
                             
-                            Capsule()
-                                .fill(priorityColor)
-                                .overlay(
-                                    Text("\(priority.rawValue)")
-                                        .font(.title3)
-                                )
-                                .frame(maxWidth: 200)
+                            Text("\(priority.rawValue)")
+                                .font(.body)
+                                .padding(.vertical, 3)
+                                .padding(.horizontal, 6)
+                                .background {
+                                    Capsule()
+                                        .fill(priorityColor)
+                                }
                         }.padding(.vertical)
-                
+                        
                         Text(selectedItem.description)
                             .font(.body)
                         
@@ -149,23 +72,30 @@ struct UserDetailView: View {
                             Text("Tasks")
                                 .font(.title2)
                                 .bold()
-
+                            
                             ForEach(selectedItem.tasks, id: \.name) { task in
                                 VStack(alignment: .leading, spacing: 5) {
                                     Text(task.name)
-                                        .font(.title2)
+                                        .font(.body)
                                     Text(task.description)
                                         .font(.body)
                                         .foregroundStyle(.secondary)
                                     Text(task.role)
                                         .foregroundStyle(.white)
                                         .font(.body)
-                                        .padding(6)
+                                        .padding(.vertical, 3)
+                                        .padding(.horizontal, 6)
                                         .background{
                                             Capsule()
                                                 .fill(Role.cretateByString(name: task.role).returnColor())
                                         }
-
+                                }
+                                .padding()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(.clear)
+                                        .strokeBorder(style: StrokeStyle(lineWidth: 0.5))
                                 }
                             }
                         }.cardStyle

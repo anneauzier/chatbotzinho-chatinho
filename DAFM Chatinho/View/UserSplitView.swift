@@ -51,12 +51,17 @@ struct UserSideBar: View {
     @Binding var selectedStory: UserStory?
     
     var body: some View {
-        List{
-            ForEach(backlog.userStories, id: \.id){ userStory in
-                Button {
-                    selectedStory = userStory
-                } label: {
-                    Text(userStory.shortDescription)
+        VStack(alignment: .leading) {
+            Text("User stories")
+                .font(.title2).bold()
+                .padding(.leading)
+            List {
+                ForEach(backlog.userStories, id: \.id){ userStory in
+                    Button {
+                        selectedStory = userStory
+                    } label: {
+                        Text(userStory.shortDescription)
+                    }
                 }
             }
         }
