@@ -12,35 +12,50 @@ struct UserSplitView: View {
     @State var selectedItem: UserStory? = nil
     
     var body: some View {
-        
-        if let backlog = backlog {
-            NavigationSplitView {
-                ProductSideBar()
-            } content: {
+
+        NavigationSplitView {
+            ProductSideBar()
+        } content: {
+            if let backlog {
                 UserSideBar(backlog: backlog, selectedStory: $selectedItem)
-            } detail: {
-                UserDetailView(userStory: selectedItem)
+            } else {
+                EmptyView()
             }
-        } else {
-            Text("Sem backlog")
+        } detail: {
+            UserDetailView(userStory: selectedItem)
+        }.toolbar {
+            ToolbarItem {
+                Button {
+                    
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
         }
+        
+    }
+}
+
+#Preview {
+    NavigationStack {
+        UserSplitView()
     }
 }
 
 struct ProductSideBar: View {
-//    @State var backlog: ProductBacklogMock
-//    @Binding var selectedStory: UserStoryMock?
+    //    @State var backlog: ProductBacklogMock
+    //    @Binding var selectedStory: UserStoryMock?
     
     var array = [1,3,4,5,6,7,8,9,10]
     var body: some View {
         List{
             ForEach(array, id: \.self){ index in
                 Text("\(index)")
-//                Button {
-//                    selectedStory = userStory
-//                } label: {
-//                    Text(userStory.shortDescription)
-//                }
+                //                Button {
+                //                    selectedStory = userStory
+                //                } label: {
+                //                    Text(userStory.shortDescription)
+                //                }
             }
         }
     }
@@ -97,9 +112,9 @@ struct UserDetailView: View {
                             Text(task.description)
                                 .font(.body)
                         }
-
+                        
                     }.frame(maxWidth: .infinity, alignment: .leading)
-                    .border(.red)
+                        .border(.red)
                     
                     
                 }.padding()

@@ -9,12 +9,16 @@ import SwiftUI
 
 @main
 struct DAFM_ChatinhoApp: App {
+    
+    @State var backlog: ProductBacklog?
 
     var body: some Scene {
         WindowGroup {
 //            ChatbotView()
            // MainView()
-            FeatureList()
+            NavigationStack {
+                UserSplitView(backlog: backlog)
+            }
         }
     }
 }
