@@ -31,6 +31,20 @@ struct UserStoryTask {
     var timeEstimation: Int
     
     @Guide(description: "how important is the task related to the other user stories tasks ( 0 - 5 : low - medium low - medium - medium high - high)")
-    var prioriey: Int
+    var priority: Int
+    
+}
+
+struct UserStoryTaskMock {
+    
+    var name: String
+    
+    var description: String
+    
+    var role: String
+    
+    var timeEstimation: Int
+    
+    var priority: Int
     
 }

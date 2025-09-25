@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct UserSplitView: View {
-    @State var backlog: ProductBacklog?
-    @State var selectedItem: UserStory? = nil
+    @State var backlog: ProductBacklogMock?
+    @State var selectedItem: UserStoryMock? = nil
     
     var body: some View {
         
         if let backlog = backlog {
             NavigationSplitView {
+                ProductSideBar()
+            } content: {
                 UserSideBar(backlog: backlog, selectedStory: $selectedItem)
             } detail: {
                 UserDetailView(userStory: selectedItem)
@@ -25,9 +27,28 @@ struct UserSplitView: View {
     }
 }
 
+struct ProductSideBar: View {
+//    @State var backlog: ProductBacklogMock
+//    @Binding var selectedStory: UserStoryMock?
+    
+    var array = [1,3,4,5,6,7,8,9,10]
+    var body: some View {
+        List{
+            ForEach(array, id: \.self){ index in
+                Text("\(index)")
+//                Button {
+//                    selectedStory = userStory
+//                } label: {
+//                    Text(userStory.shortDescription)
+//                }
+            }
+        }
+    }
+}
+
 struct UserSideBar: View {
-    @State var backlog: ProductBacklog
-    @Binding var selectedStory: UserStory?
+    @State var backlog: ProductBacklogMock
+    @Binding var selectedStory: UserStoryMock?
     
     var body: some View {
         List{
@@ -43,11 +64,46 @@ struct UserSideBar: View {
 }
 
 struct UserDetailView: View {
-    var userStory: UserStory?
+    var userStory: UserStoryMock?
     var body: some View {
         VStack{
             if let selectedItem = userStory {
-                Text(selectedItem.shortDescription)
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text(selectedItem.shortDescription)
+                                .font(.largeTitle)
+                        }
+                        
+                        Text(selectedItem.description)
+                            .font(.body)
+                        
+                        ForEach(selectedItem.acceptanceCriteria, id: \.self){ criteria in
+                            Text(criteria)
+                                .font(.headline)
+                        }
+                        
+                        ForEach(selectedItem.tasks, id: \.name) { task in
+                            HStack{
+                                Text(task.name)
+                                    .font(.title)
+                                Text(task.role)
+                                    .font(.title2)
+                                Text("\(task.priority)")
+                                    .font(.title)
+                                    .foregroundStyle(.red)
+                            }
+                            
+                            Text(task.description)
+                                .font(.body)
+                        }
+
+                    }.frame(maxWidth: .infinity, alignment: .leading)
+                    .border(.red)
+                    
+                    
+                }.padding()
+                    .border(.blue)
             }
         }
     }

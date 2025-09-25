@@ -30,3 +30,21 @@ struct UserStory: Identifiable {
     @Guide(description: "How important is this user stories for the project, focused on user's needs ( 0 - 5 : low - medium low - medium - medium high - high)")
     var priority: Int
 }
+
+
+struct UserStoryMock: Identifiable {
+    
+    var id: String {
+        shortDescription
+    }
+    
+    var shortDescription: String
+    
+    var description: String
+    
+    var acceptanceCriteria: [String]
+    
+    var tasks: [UserStoryTaskMock]
+    
+    var priority: Int
+}
