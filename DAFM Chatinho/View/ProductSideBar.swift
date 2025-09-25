@@ -16,7 +16,6 @@ struct ProductSideBar: View {
         List{
             ForEach(backlogStore.backlogs){ backlog in
                 Button {
-                    print("Changing to \(backlog)")
                     self.backlogStore.selectedBacklog = backlog
                 } label: { Text("\(backlog.name)") }
             }
