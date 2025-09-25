@@ -36,7 +36,14 @@ struct FeatureList: View {
                 }
             }.listStyle(.bordered)
             Button("Generate User Stories") {
-                viewModel.generateUserStories()
+                Task {
+                    do {
+                        let backlog = try await self.viewModel.generateUserStories()
+                        print(backlog)
+                    } catch {
+                        print(error)
+                    }
+                }
             }
         }.padding(8)
     }
