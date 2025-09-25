@@ -30,6 +30,9 @@ struct FeatureList: View {
             List {
                 ForEach(viewModel.featureList, id:\.self) { feature in
                     Text(feature)
+                        .onTapGesture {
+                            viewModel.featureToEdit(feature)
+                        }
                 }
             }.listStyle(.bordered)
             Button("Generate User Stories") {

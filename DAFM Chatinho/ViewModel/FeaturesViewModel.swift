@@ -25,4 +25,9 @@ class FeaturesViewModel {
         featureText = ""
     }
     
+    func featureToEdit(_ feature: String) {
+        featureText = feature
+        featureList.removeAll(where: { $0 == feature})
+    }
+    
 }
