@@ -10,10 +10,16 @@ import SwiftUI
 struct UserSplitView: View {
     @State var backlog: ProductBacklog?
     @State var selectedItem: UserStory? = nil
+    @State var isCreating: Bool = false {
+        didSet {
+            visibility = isCreating ? .detailOnly : .automatic
+        }
+    }
+    @State var visibility: NavigationSplitViewVisibility = .automatic
     
     var body: some View {
 
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $visibility) {
             ProductSideBar()
         } content: {
             if let backlog {
@@ -22,11 +28,17 @@ struct UserSplitView: View {
                 EmptyView()
             }
         } detail: {
-            UserDetailView(userStory: selectedItem)
-        }.toolbar {
+            if isCreating {
+                FeatureList()
+            } else {
+                UserDetailView(userStory: selectedItem)
+            }
+        }
+        
+        .toolbar {
             ToolbarItem {
                 Button {
-                    
+                    isCreating.toggle()
                 } label: {
                     Image(systemName: "plus")
                 }
