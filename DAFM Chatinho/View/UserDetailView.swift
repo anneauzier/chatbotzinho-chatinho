@@ -11,119 +11,92 @@ struct UserDetailView: View {
         VStack{
             if let selectedItem = userStory {
                 ScrollView {
-//                    VStack(alignment: .leading, spacing: 25) {
-//                        HStack {
-//                            Text(selectedItem.shortDescription)
-//                                .font(.largeTitle)
-//                                .bold()
-//                            
-//                            Text("\(selectedItem.priorityEnum.rawValue)")
-//                                .font(.body)
-//                                .padding(.vertical, 3)
-//                                .padding(.horizontal, 6)
-//                                .background {
-//                                    Capsule()
-//                                        .fill(selectedItem.priorityEnum.returnColor())
-//                                }
-//                        }
-//                        
-//                        HStack{
-//                            Image(systemName: "person")
-//                            Text(selectedItem.responsable)
-//                            
-//                            Text("\(Int.random(in: 0...7)) story Points")
-//                                .padding(.horizontal, 4)
-//                            
-//                            Text("\(0)/\(userStory?.tasks.count ?? 0) tasks completed")
-//                                .padding(.leading, 4)
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 25) {
                         HStack {
                             Text(selectedItem.shortDescription)
                                 .font(.largeTitle)
-                        }
-                        
-                        Text(selectedItem.description)
-                            .font(.body)
-                        
-//                        Divider()
-//                        
-//                        VStack(alignment: .leading, spacing: 12) {
-//                            Text("Acceptance Criteria")
-//                                .font(.title2)
-//                                .bold()
-//                            
-//                            ForEach(selectedItem.acceptanceCriteria, id: \.self) { item in
-//                                HStack(alignment: .top, spacing: 12) {
-//                                    Image(systemName: "checkmark")
-//                                        .foregroundStyle(.blue)
-//                                        .imageScale(.medium)
-//                                    Text(item)
-//                                        .font(.body)
-//                                        .foregroundStyle(.secondary)
-//                                }
-//                            }
-//                        }.cardStyle
-//                        
-//                        VStack(alignment: .leading, spacing: 12) {
-//                            Text("Tasks")
-//                                .font(.title2)
-//                                .bold()
-//                            
-//                            ForEach(selectedItem.tasks, id: \.name) { task in
-//                                VStack(alignment: .leading, spacing: 5) {
-//                                    Text(task.name)
-//                                        .font(.body)
-//                                    Text(task.description)
-//                                        .font(.body)
-//                                        .foregroundStyle(.secondary)
-//                                    Text(task.role)
-//                                        .foregroundStyle(.white)
-//                                        .font(.body)
-//                                        .padding(.vertical, 3)
-//                                        .padding(.horizontal, 6)
-//                                        .background{
-//                                            Capsule()
-//                                                .fill(Role.cretateByString(name: task.role).returnColor())
-//                                        }
-//                                }
-//                                .padding()
-//                                .frame(maxWidth: .infinity, alignment: .leading)
-//                                .background {
-//                                    RoundedRectangle(cornerRadius: 20)
-//                                        .fill(.clear)
-//                                        .strokeBorder(style: StrokeStyle(lineWidth: 0.5))
-//                                }
-//                            }
-//                        }.cardStyle
-//                    }
-//                }.padding()
-
-                        ForEach(selectedItem.acceptanceCriteria, id: \.self){ criteria in
-                            Text(criteria)
-                                .font(.headline)
-                        }
-                        
-                        ForEach(selectedItem.tasks, id: \.name) { task in
-                            HStack{
-                                Text(task.name)
-                                    .font(.title)
-                                Text(task.role)
-                                    .font(.title2)
-                                Text("\(task.priority)")
-                                    .font(.title)
-                                    .foregroundStyle(.red)
-                            }
+                                .bold()
                             
-                            Text(task.description)
+                            Text("\(selectedItem.priorityEnum.rawValue)")
                                 .font(.body)
+                                .padding(.vertical, 3)
+                                .padding(.horizontal, 6)
+                                .background {
+                                    Capsule()
+                                        .fill(selectedItem.priorityEnum.returnColor())
+                                }
+                        }
+                        
+                        HStack{
+                            Image(systemName: "person")
+                            Text(selectedItem.responsable)
+                            
+                            Text("\(Int.random(in: 0...7)) story Points")
+                                .padding(.horizontal, 4)
+                            
+                            Text("\(0)/\(userStory?.tasks.count ?? 0) tasks completed")
+                                .padding(.leading, 4)
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            
+                            Text(selectedItem.description)
+                                .font(.body)
+                            
+                            Divider()
+                            
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Acceptance Criteria")
+                                    .font(.title2)
+                                    .bold()
+                                
+                                ForEach(selectedItem.acceptanceCriteria, id: \.self) { item in
+                                    HStack(alignment: .top, spacing: 12) {
+                                        Image(systemName: "checkmark")
+                                            .foregroundStyle(.blue)
+                                            .imageScale(.medium)
+                                        Text(item)
+                                            .font(.body)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                }
+                            }.cardStyle
+                            
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Tasks")
+                                    .font(.title2)
+                                    .bold()
+                                
+                                ForEach(selectedItem.tasks, id: \.name) { task in
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        Text(task.name)
+                                            .font(.body)
+                                        Text(task.description)
+                                            .font(.body)
+                                            .foregroundStyle(.secondary)
+                                        Text(task.role)
+                                            .foregroundStyle(.white)
+                                            .font(.body)
+                                            .padding(.vertical, 3)
+                                            .padding(.horizontal, 6)
+                                            .background{
+                                                Capsule()
+                                                    .fill(Role.cretateByString(name: task.role).returnColor())
+                                            }
+                                    }
+                                    .padding()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .background {
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .fill(.clear)
+                                            .strokeBorder(style: StrokeStyle(lineWidth: 0.5))
+                                    }
+                                }
+                            }.cardStyle
                         }
                         
                     }.frame(maxWidth: .infinity, alignment: .leading)
-                        .border(.red)
-                    
-                    
                 }.padding()
-                    .border(.blue)
             }
         }
     }

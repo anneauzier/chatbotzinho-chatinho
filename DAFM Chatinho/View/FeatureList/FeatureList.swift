@@ -19,6 +19,7 @@ struct FeatureList: View {
     @State var backlog: ProductBacklog?
     
     @Binding var isCreating: Bool
+    @State var isGenerating: Bool = false
     
     var body: some View {
         NavigationStack{
@@ -29,11 +30,11 @@ struct FeatureList: View {
                               text: $viewModel.featureText)
                     .onSubmit {
                         viewModel.addNewFeature()
-                    }.disabled(isCreating)
+                    }.disabled(isGenerating)
                     Spacer()
                     Button("Add") {
                         viewModel.addNewFeature()
-                    }.disabled(isCreating)
+                    }.disabled(isGenerating)
                 }
                 
                 List {
@@ -60,33 +61,22 @@ struct FeatureList: View {
                 Button("Generate User Stories") {
                     Task {
                         do {
-                            isCreating.toggle()
+                            isGenerating.toggle()
                             backlog = try await self.viewModel.generateUserStories()
                             
                             guard let newBacklog = backlog else { return }
                             backlogStore.backlogs.append(newBacklog)
                             backlogStore.selectedBacklog = newBacklog
+                            isGenerating = false
                             isCreating = false
 
                         } catch {
                             print(error)
                         }
                     }
-                }.disabled(isCreating)
+                }.disabled(isGenerating)
             }.padding(8)
         }
         
     }
-    
-    
-}
-
-#Preview {
-<<<<<<< HEAD
-    FeatureList()
-    
-=======
-//    FeatureList()
-
->>>>>>> origin/projectNavigation
 }
