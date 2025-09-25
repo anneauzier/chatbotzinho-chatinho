@@ -33,6 +33,9 @@ struct FeatureList: View {
                     Text(feature)
                 }
             }.listStyle(.bordered)
+            Button("Generate User Stories") {
+                //TODO
+            }
         }.padding(8)
     }
     
