@@ -120,7 +120,6 @@ struct ChatbotView: View {
                             }
                             
                             Markdown(message.returnTextFormatted())
-//                                .foregroundColor(message.isFromChat ? .red : .blue)
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 10)
                             

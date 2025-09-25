@@ -11,7 +11,9 @@ import Foundation
 @Generable(description: "Scrum user story")
 struct UserStory: Identifiable {
     
-    var id: UUID = UUID()
+    var id: String {
+        shortDescription
+    }
     
     @Guide(description: "Short name description")
     var shortDescription: String

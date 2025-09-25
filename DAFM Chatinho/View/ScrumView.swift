@@ -26,7 +26,7 @@ struct ScrumView: View {
             }
         } else {
             NavigationStack{
-                NavigationLink("Generate", destination: UserSplitView())
+                NavigationLink("Generate", destination: UserSplitView(backlog: backlog))
                 
                 ScrollView{
                     TextField("Type your functionality here and press ⏎", text: $featureDescription)

@@ -14,7 +14,7 @@ enum MenuOptions: String, CaseIterable {
 }
 
 struct MainView: View {
-    @State var selected: MenuOptions = .chatBot
+    @State var selected: MenuOptions = .scrum
     
     var body: some View {
         VStack {
