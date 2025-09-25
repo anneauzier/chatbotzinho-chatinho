@@ -40,5 +40,11 @@ class FeaturesViewModel {
     private func pipe(_ newFeatureOffset: Int) -> String {
         return newFeatureOffset != 0 ? "|"  : ""
     }
+
+    func featureToEdit(_ feature: String) {
+        featureText = feature
+        featureList.removeAll(where: { $0 == feature})
+
+    }
     
 }
