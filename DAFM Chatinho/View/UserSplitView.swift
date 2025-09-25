@@ -47,7 +47,13 @@ struct UserSideBar: View {
         VStack(alignment: .leading) {
             Text("User stories")
                 .font(.title2).bold()
-                .padding(.leading)
+                .padding([.top,.horizontal])
+            
+            Text("\(backlog.userStories.count) stories  -  \(0) completed")
+                .padding([.bottom,.horizontal])
+            
+            Divider()
+            
             List {
                 ForEach(backlog.userStories, id: \.id){ userStory in
                     Button {
@@ -76,8 +82,9 @@ struct UserSideBar: View {
                         }
                     }
                 }
-            }.frame(maxWidth: .infinity)
-        }
+            }//.frame(maxWidth: .infinity)
+            
+        }//.padding()
     }
 }
 

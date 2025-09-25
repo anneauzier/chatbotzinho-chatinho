@@ -49,7 +49,7 @@ struct FeatureList: View {
                                 Spacer()
                                 ProgressView()
                                     .progressViewStyle(CircularProgressViewStyle())
-                                Text("Generating colors...")
+                                Text("Generating User Stories...")
                                     .font(.headline)
                                 Spacer()
                             }

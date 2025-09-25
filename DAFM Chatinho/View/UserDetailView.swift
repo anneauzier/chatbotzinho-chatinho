@@ -9,8 +9,6 @@ import SwiftUI
 struct UserDetailView: View {
     var userStory: UserStory?
     
-    
-    
     var body: some View {
         VStack{
             if let selectedItem = userStory {
