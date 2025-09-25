@@ -40,7 +40,7 @@ struct MainView: View {
             case .chatBot:
                 ChatbotView()
             case .scrum:
-                FeatureList()
+                UserSplitView()
             case .palletGenerator:
                 PalletGeneratorView()
             }

@@ -11,7 +11,6 @@ struct UserSplitView: View {
     
     @Environment(BacklogStore.self) var backlogStore
     
-    @State var backlog: ProductBacklog?
     @State var selectedItem: UserStory? = nil
     @State var isCreating: Bool = false
     
@@ -21,11 +20,7 @@ struct UserSplitView: View {
             NavigationSplitView {
                 ProductSideBar()
             } detail: {
-                if isCreating {
-                    FeatureList()
-                } else {
-                    UserDetailView(userStory: selectedItem)
-                }
+                FeatureList(isCreating: $isCreating)
             }
         } else {
             NavigationSplitView {
@@ -38,16 +33,12 @@ struct UserSplitView: View {
                     EmptyView()
                 }
             } detail: {
-                if isCreating {
-                    FeatureList()
-                } else {
-                    UserDetailView(userStory: selectedItem)
-                }
+                UserDetailView(userStory: selectedItem)
             }
             .toolbar {
                 ToolbarItem {
                     Button {
-                        isCreating.toggle()
+                        isCreating = true
                     } label: {
                         Image(systemName: "plus")
                     }

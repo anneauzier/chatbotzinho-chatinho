@@ -9,13 +9,16 @@ import SwiftUI
 
 struct FeatureList: View {
     
+    @Environment(BacklogStore.self) var backlogStore
+    
     @State var viewModel = FeaturesViewModel()
 
     @State var isSubmited:Bool = false
     
     @State var showSplitView: Bool = false
-    
     @State var backlog: ProductBacklog?
+    
+    @Binding var isCreating: Bool
     
     var body: some View {
         NavigationStack{
@@ -44,17 +47,16 @@ struct FeatureList: View {
                     Task {
                         do {
                             backlog = try await self.viewModel.generateUserStories()
-                            print(backlog)
-                            showSplitView.toggle()
+                            guard let newBacklog = backlog else { return }
+                            backlogStore.backlogs.append(newBacklog)
+                            backlogStore.selectedBacklog = newBacklog
+                            isCreating = false
                         } catch {
                             print(error)
                         }
                     }
                 }
             }.padding(8)
-                .navigationDestination(isPresented: $showSplitView) {
-                    UserSplitView(backlog: backlog)
-                }
         }
         
     }
@@ -63,6 +65,6 @@ struct FeatureList: View {
 }
 
 #Preview {
-    FeatureList()
+//    FeatureList()
 
 }
