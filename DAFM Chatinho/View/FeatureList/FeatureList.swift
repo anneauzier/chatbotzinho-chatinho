@@ -28,11 +28,11 @@ struct FeatureList: View {
                               text: $viewModel.featureText)
                     .onSubmit {
                         viewModel.addNewFeature()
-                    }
+                    }.disabled(isGenerating)
                     Spacer()
                     Button("Add") {
                         viewModel.addNewFeature()
-                    }
+                    }.disabled(isGenerating)
                 }
                 
                 List {
@@ -61,6 +61,7 @@ struct FeatureList: View {
                         do {
                             isGenerating.toggle()
                             backlog = try await self.viewModel.generateUserStories()
+                            isGenerating.toggle()
                             showSplitView.toggle()
                         } catch {
                             print(error)

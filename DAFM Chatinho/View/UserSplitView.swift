@@ -28,19 +28,12 @@ struct UserSplitView: View {
 }
 
 struct ProductSideBar: View {
-    //    @State var backlog: ProductBacklogMock
-    //    @Binding var selectedStory: UserStoryMock?
     
     var array = [1,3,4,5,6,7,8,9,10]
     var body: some View {
         List{
             ForEach(array, id: \.self){ index in
                 Text("\(index)")
-                //                Button {
-                //                    selectedStory = userStory
-                //                } label: {
-                //                    Text(userStory.shortDescription)
-                //                }
             }
         }
     }
@@ -60,10 +53,30 @@ struct UserSideBar: View {
                     Button {
                         selectedStory = userStory
                     } label: {
-                        Text(userStory.shortDescription)
+                        VStack(alignment: .leading) {
+                            HStack{
+                                Text(userStory.shortDescription)
+                                    .font(.headline)
+                                
+                                Spacer()
+                                
+                                Text("\(userStory.priorityEnum.rawValue)")
+                                    .font(.body)
+                                    .padding(.vertical, 3)
+                                    .padding(.horizontal, 6)
+                                    .background {
+                                        Capsule()
+                                            .fill(userStory.priorityEnum.returnColor())
+                                    }
+                            }
+                            
+                            Text("\(userStory.responsable)")
+                                .font(.caption)
+                                
+                        }
                     }
                 }
-            }
+            }.frame(maxWidth: .infinity)
         }
     }
 }

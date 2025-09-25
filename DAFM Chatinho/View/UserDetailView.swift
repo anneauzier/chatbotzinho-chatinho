@@ -9,24 +9,7 @@ import SwiftUI
 struct UserDetailView: View {
     var userStory: UserStory?
     
-    var priorityColor: Color {
-        var color: Color = .red
-        if let priorityNumber = userStory?.priority {
-            let priority = Priority.cretateByNumber(number: priorityNumber)
-            color = priority.returnColor()
-        }
-        return color
-    }
     
-    var priority: Priority {
-        if let userStory = userStory {
-            Priority.cretateByNumber(number: userStory.priority)
-        } else {
-            .high
-        }
-    }
-    
-    let allResponsables: [String] = ["Anne", "Filipe", "Igor", "Sergio"]
     
     var body: some View {
         VStack{
@@ -38,19 +21,19 @@ struct UserDetailView: View {
                                 .font(.largeTitle)
                                 .bold()
                             
-                            Text("\(priority.rawValue)")
+                            Text("\(selectedItem.priorityEnum.rawValue)")
                                 .font(.body)
                                 .padding(.vertical, 3)
                                 .padding(.horizontal, 6)
                                 .background {
                                     Capsule()
-                                        .fill(priorityColor)
+                                        .fill(selectedItem.priorityEnum.returnColor())
                                 }
                         }
                         
                         HStack{
                             Image(systemName: "person")
-                            Text(allResponsables.randomElement()!)
+                            Text(selectedItem.responsable)
                             
                             Text("\(Int.random(in: 0...7)) story Points")
                                 .padding(.horizontal, 4)
